@@ -1,8 +1,10 @@
+from asyncio.windows_events import NULL
 from distutils.command.upload import upload
 import email
 from http.client import LENGTH_REQUIRED
 from tabnanny import verbose
 from tkinter import CASCADE
+from unicodedata import name
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -12,8 +14,9 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 # ITEMS
 
 class Item(models.Model):
-    item_name   = models.CharField(max_length=100)
-    image       = models.ImageField(upload_to='static/images/items', blank=True)
+    item_name   = models.CharField(max_length=100, verbose_name="název")
+    description = models.TextField(max_length=500, verbose_name="popis", blank=True)
+    image       = models.ImageField(upload_to='', blank=True)  # 115 preview in admin?
 
     class Meta:
         verbose_name = "Položka"
@@ -22,6 +25,7 @@ class Item(models.Model):
     def __str__(self):
         return self.item_name
 
+    
 
 size_choice = (
     ("32", "32"),
@@ -31,35 +35,34 @@ size_choice = (
 
 fabric_design_choice = (
     ("uni", "uni"),
-    ("girl", "dívčí"),
-    ("boy", "chlapecký"),
+    ("dívčí", "dívčí"),
+    ("chlapecký", "chlapecký"),
 )
 
 class ItemVariation(models.Model):
     item                = models.ForeignKey(Item, verbose_name="položka", on_delete=models.CASCADE)
     size                = models.CharField(choices=size_choice, max_length=50, verbose_name="velikost", blank=False)
     fabric_design       = models.CharField(choices=fabric_design_choice, max_length=50, verbose_name="vzor", blank=False)
+    description         = models.TextField(max_length=500, verbose_name="popis", blank=True)
     on_stock            = models.PositiveIntegerField(verbose_name="na skladě")
     reserved_quantity   = models.IntegerField(verbose_name="rezervované množství")
-    
+    saldo               = models.IntegerField(blank=True, editable=False)
 
+    
     class Meta:
         verbose_name = "Varianta"
         verbose_name_plural = "Varianty"
 
-    def __unicode__(self):
-        return self.item
+    def __str__(self):
+        return self.item.item_name + " (vel. " + self.size + ", vzor " + self.fabric_design + ")"
 
-    #def get_available_quantity(self):
-     #   _ = self.on_stock - self.reserved_quantity
-      #  if _ <= 0:
-    #        available_quantity = 0
-     #   else:
-      #      available_quantity = _
-       # return available_quantity
+    def save(self, **kwargs): 
+        self.saldo = self.on_stock - self.reserved_quantity
+        return super().save(**kwargs)
 
-
-    #available_quantity = self.get_available_quantity()
+    @property
+    def image(self):
+        return self.item.image
 
 
 
@@ -142,7 +145,7 @@ status_choice = (
 
 
 class Reservation(models.Model):
-    reservation_number  = models.IntegerField(verbose_name="rezervační číslo", max_length=5, primary_key=True, auto_created=True, editable=False, unique=True)
+    reservation_number  = models.IntegerField(verbose_name="rezervační číslo", primary_key=True, auto_created=True, editable=False, unique=True)
     status              = models.CharField(choices=status_choice, max_length=50, default="new")
     organisation_name   = models.ForeignKey(OrganisationProfile, on_delete=models.CASCADE, verbose_name="organizace")
     created_at          = models.DateTimeField(verbose_name="vytvořena dne", auto_created=True, default=timezone.now)

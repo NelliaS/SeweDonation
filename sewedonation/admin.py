@@ -14,7 +14,7 @@ class AccountAdmin(UserAdmin):
     fieldsets = ()
 
 class VariationAdmin(admin.ModelAdmin):
-    list_display = ("item", "size", "fabric_design", "on_stock", "reserved_quantity")
+    list_display = ("item", "size", "fabric_design", "on_stock", "reserved_quantity", "saldo")
     list_filter = ("size",)
     
 
