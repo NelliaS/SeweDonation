@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.overview, name='overview'),
     path("__reload__/", include("django_browser_reload.urls")),
+    path('registration', views.registration, name='registration'),
 ]
 
 if settings.DEBUG:

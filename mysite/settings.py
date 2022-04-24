@@ -38,14 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sewedonation',
-    'tailwind',
-    'theme',
     'django_browser_reload',
 ]
 
-TAILWIND_APP_NAME = 'theme'
-
-NPM_BIN_PATH = r"C:\Users\lenka\AppData\Roaming\npm\npm.cmd"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,53 +1,23 @@
-{% load static tailwind_tags %}
-<!DOCTYPE html>
-<html lang="cs">
-	<head>
-		<title>UŠIJ A DARUJ</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-        {% tailwind_css %}
-        <link rel="stylesheet" href="../../../theme/static/css/dist/styles.css">
-        <link href="https://fonts.googleapis.com/css2?family=Chicle&display=swap" rel="stylesheet">
-	</head>
+{% extends 'sewedonation/base.html' %}
 
-	<body>
-        <main class="min-h-screen bg-gradient-to-r from-pink-600 to-pink-800 pt-3" style="font-family: 'Calibri', sans-serif;">
-            <div class="float-root">
-                <div class="p-5 m-5 w-40 float-left">
-                    <a href="http://kdynsketvoreni.cz"><img alt="Kdyňské tvoření, z. s." class="rounded-full shadow-lg" src="{% static 'images/logo.jpg' %}"></a>
-                </div>
-                <form class="text-sm m-5">
-                    <div class="float-right">
-                        <span class="block text-sm font-semibold text-pink-200">Přihlášení pro organizace</span>
-                        <input type="text" placeholder="e-mailová adresa" class="shadow-md mt-1 block w-50 px-3 py-2 bg-pink-100 border border-pink-900 rounded-md text-sm placeholder-slate-400 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
-                        <input type="password" placeholder="heslo" class="shadow-md mt-1 block w-50 px-3 py-2 bg-pink-100 border-pink-900 rounded-md text-sm placeholder-slate-400 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
-                        <button type="submit" class="bg-pink-200 hover:bg-pink-400 text-gray-800 py-2 px-4 mt-1 border border-pink-900 rounded shadow">Přihlásit se</button>
-                    </div>
-                </form>
-                <div>
-                  <h1 class="h-30 text-center text-8xl text-pink-200 px-30 drop-shadow-2xl" style="font-family: 'Chicle', serif;">UŠIJ A DARUJ</h1>
+{% block content %}
+    <div class="container px-5 py-3 text-md-center">
+        <h5>
+            Chtěli byste darovat doma šité oblečení pro nedonošeňátka? <br>
+            Uvítáme jakékoli oblečení, avšak nejvíce nám teď schází kousky v těchto velikostech:
+        </h5>
+    </div> 
+    <div class="row row-cols-1 row-cols-md-3 g-4 py-3">
+    {% for item in three_lowest %}
+    <div class="col">
+        <div class="card p-3 shadow-sm">
+            <img src="{{ item.image.url }}" class="card-img-top">
+                <div class="card-body">
+                    <h6 class="card-title">{{ item }}</h6>
+                    <p class="card-text">Chybí {{ item.saldo|stringformat:"+d"|slice:"1:" }} ks.</p>
                 </div>
             </div>
-            <div class="text-center">
-                <h2 class="h-10 text-pink-100" >Přehled zásob a rezervační systém pro Kdyňské tvoření, z. s.</h2>
-                <div class="px-20 text-xl text-white max-w-5xl">
-                    Chtěli byste darovat doma šité výrobky pro nedonošeňátka? 
-                    Uvítáme jakékoli oblečení, ..., avšak nejvíce nám teď schází tyto kousky v těchto velikostech:
-                </div><br>
-            </div> 
-            <div class="p-10 sm:p-5 columns-3 gap-5 flex mx-10 sm:mx-5 text-center">
-                {% for item in three_lowest %}
-                <div class="top-0 rounded-lg p-5 border-10 sm:border-5 bg-pink-100 text-pink-900 place-items-center shadow-lg">
-                <item class="font-bold text-lg">{{ item }}</item>
-                <img class="my-3 shadow-sm" src='{{ item.image.url }}'>
-                Chybí <item class="text-lg font-black"> {{ item.saldo|stringformat:"+d"|slice:"1:" }} </item> ks
-                </div>
-                {% endfor %}
-            </div>
-        </main>
-    </body>
-    <footer class="text-center text-xs font-black p-2">
-        © 2022 | Created by Kashlen
-    </footer>
-</html>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
