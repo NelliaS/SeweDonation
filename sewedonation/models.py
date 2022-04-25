@@ -106,6 +106,7 @@ class OrganisationProfile(AbstractBaseUser):
     address             = models.CharField(verbose_name="Adresa", max_length=200, blank=True)
     phone               = models.CharField(verbose_name="Telefon", max_length=30, blank=True)
     notes               = models.TextField(verbose_name="Poznámky", blank=True)
+    #reservations        = models.ForeignKey(Reservation, verbose_name="Rezervace", on_delete=models.CASCADE)
 
     is_admin            = models.BooleanField(default=False)
     is_staff            = models.BooleanField(default=False)
@@ -114,7 +115,7 @@ class OrganisationProfile(AbstractBaseUser):
 
     USERNAME_FIELD      = 'username'
     REQUIRED_FIELDS     = ['organisation_name']
-    #reservations       = models.ForeignKey()
+  
 
     objects = MyAccountManager()
 

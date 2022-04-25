@@ -9,7 +9,7 @@ def overview(request):
     return render(request, 'sewedonation/overview.html', {'three_lowest': three_lowest})
 
 
-def register(request):
+def registration(request):
     return render(request, 'sewedonation/registration.html')
 
 def login(request):

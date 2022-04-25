@@ -25,21 +25,6 @@
                     <div class="display-1 " style="font-family: 'Chicle', serif;">UŠIJ A DARUJ</div>
                     <span style="position: relative; top: -10px">Přehled zásob a rezervační systém</span>
                 </div>
-                <form action="/username/" method="post" class="col-lg-3 col-7 pt-2 order-lg-3">
-                    <div class="mb-2">Přihlášení pro organizace</div>
-                    <div class="form-floating mb-2 text-secondary">
-                        <input type="email" class="form-control" id="username" placeholder="jmeno@mail.cz" value="{{ organisation_mail }}">
-                        <label for="floatingInput">E-mailová adresa</label>
-                    </div>
-                    <div class="form-floating mb-2 text-secondary">
-                        <input type="password" class="form-control" id="password" placeholder="Password">
-                        <label for="floatingPassword">Heslo</label>
-                    </div>
-                    <div class="mb-2">
-                        <input type="submit" class="btn btn-outline-light btn-sm" value="Přihlásit se"></input>
-                        <a href="{% url 'registration' %}" type="submit" class="btn btn-outline-light btn-sm">Zaregistrovat se</a>
-                    </div> 
-                </form>
             </div>
         </div>
         <main class="my-4 bg-primary container">
