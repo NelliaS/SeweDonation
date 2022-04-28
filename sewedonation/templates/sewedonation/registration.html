@@ -1,54 +1,41 @@
-{% extends 'sewedonation/base_logged.html' %}
+{% extends 'sewedonation/base.html' %}
 
 {% block content %}
-    <p><h1>Registrace</h1></p>
-
-
-    <form class="row g-3">
-        <div class="col-md-6">
-          <label for="inputEmail4" class="form-label">E-mailová adresa</label>
-          <input type="email" class="form-control" id="inputEmail4">
-        </div>
-        <div class="col-md-6">
-          <label for="inputPassword4" class="form-label">Heslo</label>
-          <input type="password" class="form-control" id="inputPassword4">
-        </div>
-        <div class="col-12">
-          <label for="inputAddress" class="form-label">Adresa</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="col-12">
-          <label for="inputAddress2" class="form-label">Adresa</label>
-          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
-        <div class="col-md-6">
-          <label for="inputCity" class="form-label">Město</label>
-          <input type="text" class="form-control" id="inputCity">
-        </div>
-        <div class="col-md-4">
-          <label for="inputState" class="form-label">Stát</label>
-          <select id="inputState" class="form-select">
-            <option selected>Česká republika</option>
-            <option>Slovensko</option>
-          </select>
-        </div>
-        <div class="col-md-2">
-          <label for="inputZip" class="form-label">PSČ</label>
-          <input type="text" class="form-control" id="inputZip">
-        </div>
-        <div class="col-12">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-              Check me out
-            </label>
-          </div>
-        </div>
-        <div class="col-12">
-          <button type="submit" class="btn btn-primary">ZAREGISTROVAT</button>
-        </div>
-      </form>
-
-
-
+<div class="card mw-70">
+    <h3 class="card-header text-center bg-secondary text-white">
+        Registrace
+    </h3>
+    <div class="card-body">
+        <form class="row g-3" action="{% url 'registration' %}" method="POST">
+            {% csrf_token %}
+            <div class="col-12">
+                <label for="inputOrganisation_name" class="form-label">Název organizace</label>
+                {{ form.organisation_name }}
+            </div>
+            <div class="col-md-6">
+                <label for="inputContact_person" class="form-label">Kontaktní osoba</label>
+                {{ form.contact_person }}
+            </div>
+            <div class="col-md-6">
+                <label for="inputPhone" class="form-label">Telefon</label>
+                {{ form.phone }}
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">E-mailová adresa</label>
+                {{ form.email }}
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Heslo</label>
+                {{ form.password }}
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Adresa (ulice, č. p., město, PSČ)</label>
+                {{ form.address }}
+            </div>
+            <div class="col-12 text-center py-3">
+                <button type="submit" class="btn btn-outline-light bg-secondary btn-lg">ZAREGISTROVAT</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

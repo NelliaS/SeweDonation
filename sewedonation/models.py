@@ -70,12 +70,13 @@ class ItemVariation(models.Model):
 # ACCOUNTS
 
 class MyAccountManager(BaseUserManager):
-    def create_user(self, organisation_name, username, password=None):
-        if not username:
+    def create_user(self, organisation_name, username, email, password=None):
+        if not email:
             raise ValueError("Vyplňte e-mailovou adresu.")
         
         user = self.model(
-            username = self.normalize_email(username),
+            email = self.normalize_email(email),
+            username = username,
             organisation_name = organisation_name
         )
 
@@ -83,9 +84,10 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, organisation_name, username, password):
+    def create_superuser(self, organisation_name, username, email, password):
         user = self.create_user(
-            username = self.normalize_email(username),
+            email = self.normalize_email(email),
+            username = username,
             password = password,
             organisation_name = organisation_name,
         )
@@ -100,12 +102,14 @@ class MyAccountManager(BaseUserManager):
 
 
 class OrganisationProfile(AbstractBaseUser):
-    username            = models.EmailField(verbose_name="E-mailová adresa", max_length=100, unique=True)
+    email               = models.EmailField(verbose_name="E-mailová adresa", max_length=100, unique=True)
+    username            = models.CharField(verbose_name="Uživatelské jméno", max_length=50, unique=True)
     organisation_name   = models.CharField(verbose_name="Název organizace", max_length=100, unique=True)
     contact_person      = models.CharField(verbose_name="Kontaktní osoba", max_length=50, blank=True)
     address             = models.CharField(verbose_name="Adresa", max_length=200, blank=True)
     phone               = models.CharField(verbose_name="Telefon", max_length=30, blank=True)
     notes               = models.TextField(verbose_name="Poznámky", blank=True)
+    
     #reservations        = models.ForeignKey(Reservation, verbose_name="Rezervace", on_delete=models.CASCADE)
 
     is_admin            = models.BooleanField(default=False)
@@ -113,8 +117,8 @@ class OrganisationProfile(AbstractBaseUser):
     is_active           = models.BooleanField(default=False)
     is_superadmin       = models.BooleanField(default=False)
 
-    USERNAME_FIELD      = 'username'
-    REQUIRED_FIELDS     = ['organisation_name']
+    USERNAME_FIELD      = 'email'
+    REQUIRED_FIELDS     = ['organisation_name', 'username']
   
 
     objects = MyAccountManager()
@@ -124,7 +128,7 @@ class OrganisationProfile(AbstractBaseUser):
         verbose_name_plural = "Organizace"
 
     def __str__(self):
-        return self.username
+        return self.organisation_name
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
