@@ -1,23 +1,11 @@
 {% extends 'sewedonation/base.html' %}
+{% load static %}
 
 {% block content %}
-
-    <div class="container text-center">
-        Registrace byla úspěšná. Prosím, přihlašte se:<br>
-        <form action="{% url 'registration_succeed' %}" method="post" class="mx-auto p-2" style="width: 350px;">
-            {% csrf_token %}
-            <div class="form-floating mb-2 text-secondary">
-                <input type="email" class="form-control" id="email" name="email" placeholder="jmeno@mail.cz">
-                <label for="floatingInput">E-mailová adresa</label>
-            </div>
-            <div class="form-floating mb-2 text-secondary">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                <label for="floatingPassword">Heslo</label>
-            </div>
-            <div class="mb-2">
-                <input type="submit" class="btn btn-outline-light btn-sm bg-secondary" value="Přihlásit se"></input>
-            </div> 
-        </form>
+    <div class="card text-center">
+        <br>
+        <br>
+        <h4>Registrace byla úspěšná. Prosím, přihlašte se.</h4>
+        <img class="" src="{% static 'images/success.jpg' %}">
     </div>
-
 {% endblock %}

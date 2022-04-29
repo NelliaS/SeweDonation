@@ -21,10 +21,33 @@
                     <a href="http://kdynsketvoreni.cz"><img class="rounded-circle img-fluid" src="{% static 'images/logo.jpg' %}"></a>
                     </div>
                 </div>  
-                <div class="col-lg-8 col-12 order-first order-lg-2 text-center align-self-center py-3">
-                    <div class="display-1" style="font-family: 'Chicle', serif;">UŠIJ A DARUJ</div>
+                <div class="col-lg-7 col-12 order-first order-lg-2 text-center align-self-center py-3">
+                    <div class="display-1 " style="font-family: 'Chicle', serif;">UŠIJ A DARUJ</div>
                     <span style="position: relative; top: -10px">Přehled zásob a rezervační systém</span>
                 </div>
+                {% if user.id is None %}
+                <form action="{% url 'overview' %}" method="post" class="col-lg-3 col-7 pt-2 order-lg-3">
+                    {% csrf_token %}
+                    <div class="mb-2">Přihlášení pro organizace</div>
+                    <div class="form-floating mb-2 text-secondary">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="jmeno@mail.cz">
+                        <label for="floatingInput">E-mailová adresa</label>
+                    </div>
+                    <div class="form-floating mb-2 text-secondary">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                        <label for="floatingPassword">Heslo</label>
+                    </div>
+                    <div class="mb-2">
+                        <input type="submit" class="btn btn-outline-light btn-sm" value="Přihlásit se"></input>
+                        <a href="{% url 'registration' %}" type="submit" class="btn btn-outline-light btn-sm">Zaregistrovat se</a>
+                    </div> 
+                </form>
+                {% else %}
+                <div class="col-lg-3 col-7 pt-4 order-lg-3">
+                    Přihlášená organizace:<br>
+                    {{ user.organisation_name }}
+                </div>
+                {% endif %}
             </div>
         </div>
         <main class="my-4 bg-primary container">
