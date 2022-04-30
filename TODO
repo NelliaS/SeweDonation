@@ -1,0 +1,9 @@
+Suggestions
+[] add all missing libraries into requirements.txt (eg django_browser_reload, Pillow) - another person can then just "pip install -r requirements.txt" 
+[] start using formatter - suggested black - https://pypi.org/project/black/, with parameters -Sl 120 (skip string normalization and line length 120 (https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html)  (if you dont use bash aliases, i recommend to learn it and create it for black with those parameters)
+[] remove all unused imports - builtin in VSCODE? https://stackoverflow.com/questions/46722701/is-there-a-way-to-remove-unused-imports-and-declarations-from-angular-2
+[] comments strictly in english, start using "# TODO sth sth" for things to be implemented (builtin highlightion in VSCODE? or extension https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight?)
+[] rename mysite to sth meaningful - what this app should do?
+[] rename all images to english
+[] add short and simple README
+
