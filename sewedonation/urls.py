@@ -8,7 +8,7 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('registration', views.registration, name='registration'),
     path('registration_succeed', views.registration_succeed, name='registration_succeed'),
-    path('logout', views.logout, name='logout'),
+    path('logout', views.log_out, name='log_out'),
 ]
 
 if settings.DEBUG:

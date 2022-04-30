@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import ItemVariation, OrganisationProfile
 from .forms import RegistrationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -47,8 +47,9 @@ def registration(request):
 def registration_succeed(request):
     return render(request, 'sewedonation/registration_succeed.html')
 
-def logout(request):
-    return render(request, 'sewedonation/logout.html')
+def log_out(request):               # 66,15; použít dekorátor @login_required k ověření zalogování před logoutem? / mám tam podmínku
+    logout(request)
+    return redirect('overview')
         
 
 
